@@ -26,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView mImageView;
         mTxtDisplay = (TextView) findViewById(R.id.json);
-        String url = "http://pokeapi.co/api/v2/ pokemon/1/";
+
+        String url = "http://pokeapi.co/api/v2/pokemon/1/";
         try {
             JSONObject reader = new JSONObject(url);
             JSONObject main  = reader.getJSONObject("forms");
             name = main.getString("name");
+            mTxtDisplay.setText(name);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-                mTxtDisplay.setText("Response: " + name);
+                mTxtDisplay.setText(name);
 
             }
         }, new Response.ErrorListener() {
