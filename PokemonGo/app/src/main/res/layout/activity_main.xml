@@ -11,7 +11,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="88dp"
         android:layout_height="48dp"
-        android:text="VS"
+        android:text="@string/vs"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
@@ -20,17 +20,19 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="224dp"
-        android:layout_height="48dp"
-        android:text="Selección aleatoria"
+        android:id="@+id/ran"
+        android:layout_width="208dp"
+        android:layout_height="39dp"
+        android:text="@string/selecci_n_aleatoria"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginBottom="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="437dp"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -46,7 +48,8 @@
         android:layout_marginEnd="20dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        android:contentDescription="" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -61,7 +64,8 @@
         android:layout_marginTop="33dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/button" />
+        app:layout_constraintLeft_toRightOf="@+id/button"
+        android:contentDescription="" />
 
     <ListView
         android:layout_width="149dp"
@@ -95,7 +99,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="1dp"
-        android:text="pokemon"
+        android:text="@string/pokemon"
         app:layout_constraintRight_toLeftOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintRight_creator="1"
