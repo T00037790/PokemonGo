@@ -1,13 +1,9 @@
 package com.example.alvaro.pokemongo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -21,13 +17,13 @@ import com.android.volley.toolbox.ImageLoader;
  * Created by Alvaro on 18/09/2017.
  */
 
-public class Volley extends AppCompatActivity{
-    private static Volley customVolleyRequest;
+public class HttpRequest extends AppCompatActivity{
+    private static HttpRequest customVolleyRequest;
     private static Context context;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
 
-    private Volley(Context context) {
+    private HttpRequest(Context context) {
         this.context = context;
         this.requestQueue = getRequestQueue();
 
@@ -48,9 +44,9 @@ public class Volley extends AppCompatActivity{
                 });
     }
 
-    public static synchronized Volley getInstance(Context context) {
+    public static synchronized HttpRequest getInstance(Context context) {
         if (customVolleyRequest == null) {
-            customVolleyRequest = new Volley(context);
+            customVolleyRequest = new HttpRequest(context);
         }
         return customVolleyRequest;
     }

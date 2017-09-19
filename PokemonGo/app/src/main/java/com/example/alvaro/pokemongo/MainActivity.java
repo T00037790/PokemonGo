@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,23 +19,26 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements View.OnClickListener{
+    Button choose;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent jugar = new Intent();
-                jugar.setClass(getApplicationContext(), Play.class);
-                jugar.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                jugar.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                jugar.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(jugar);
-            }
-        };
-        findViewById(R.id.imageView).setOnClickListener(listener);
-    }
+        choose = (Button) findViewById(R.id.ran);
 
     }
+
+    @Override
+    public void onClick(View v) {
+
+        public void onClick() {
+
+            texto.setText("");
+
+        }
+
+
+    }
+}
