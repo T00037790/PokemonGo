@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity  {
         pokemon2 = rand.nextInt(721) + 1;
 
         versus = (Button) findViewById(R.id.vs);
-        versus.setVisibility(0);
+        versus.setVisibility(View.INVISIBLE);
         randompoks =(Button) findViewById(R.id.random);
         randompoks.setOnClickListener(new View.OnClickListener()
         {
@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity  {
                         });
                 queue.add(getRequest1);
                 queue.add(getRequest2);
+                versus.setVisibility(View.VISIBLE);
+                randompoks.setVisibility(View.GONE);
             }
 
         });

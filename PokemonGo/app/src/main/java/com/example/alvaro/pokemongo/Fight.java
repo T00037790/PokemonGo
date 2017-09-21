@@ -26,8 +26,8 @@ public class Fight extends AppCompatActivity {
         Random rand = new Random();
         img1 = (NetworkImageView) findViewById(R.id.img11);
         img2 = (NetworkImageView) findViewById(R.id.img22);
-        loadImage(img1, );
-        loadImage(img2, );
+        ///loadImage(img1, );
+        ///loadImage(img2, );
 
     }
 
