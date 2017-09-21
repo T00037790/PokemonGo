@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import static com.example.alvaro.pokemongo.R.id.imageView;
+
 import static com.example.alvaro.pokemongo.R.id.pk2;
 
 /**
@@ -46,7 +46,7 @@ public class Play extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         int pokemon1, pokemon2;
         super.onCreate(savedInstanceState);
-        attack = (Button) findViewById(R.id.ran);
+        /* *attack = (Button) findViewById(R.id.ran);
         img1 = (NetworkImageView) findViewById(pk2);
         img2 = (NetworkImageView) findViewById(R.id.imageView2);
         tx1 = (TextView) findViewById(R.id.textView2);
