@@ -1,4 +1,4 @@
-package com.example.alvaro.pokemongo;
+package com.example.alvaro.Singleton;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +12,8 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.example.alvaro.pokemongo.R;
 
 /**
  * Created by Alvaro on 18/09/2017.
@@ -62,6 +64,14 @@ public class HttpRequest extends AppCompatActivity{
     }
     public ImageLoader getImageLoader() {
         return imageLoader;
+    }
+
+    public void loadImage(NetworkImageView imageView, String urlImg) {
+        imageLoader = HttpRequest.getInstance(this.getApplicationContext())
+                .getImageLoader();
+        imageLoader.get(urlImg, ImageLoader.getImageListener(imageView, R.drawable.white, android.R.drawable.ic_dialog_alert));
+        imageView.setImageUrl(urlImg, imageLoader);
+
     }
     }
 

@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Fight"></activity>
+        <activity android:name="com.example.alvaro.Fight.Fight" />
+        <activity android:name="com.example.alvaro.winner.Winner"></activity>
     </application>
 
 </manifest>

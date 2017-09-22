@@ -1,14 +1,12 @@
 package com.example.alvaro.pokemongo;
 
 import android.content.Intent;
-import android.provider.Settings;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,8 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.alvaro.Fight.Fight;
+import com.example.alvaro.Singleton.HttpRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,22 +32,18 @@ public class MainActivity extends AppCompatActivity  {
 
     private ImageLoader imageLoader;
     NetworkImageView imgpok1, imgpok2;
-    TextView namepok1,namepok2,vd1,vd2;
+    TextView namepok1,namepok2;
     Button randompoks, versus;
     ArrayList<String> inf1;
     ArrayList<String> inf2;
     ListView listpok1;
     ListView listpok2;
     Boolean rd1=false,rd2=false;
-    int vida1=100,vida2=100, pokemon1, pokemon2;
-    String id;
-    public String[] values = new String[2];
+    int pokemon1, pokemon2;
+    String  powerpok1, powerpok2, id, namep1, namep2;
+    public String[] values = new String[3];
     Random rand = new Random();
-
     public final String url = "http://pokeapi.co/api/v2/pokemon/";
-    String urlimg1="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/", urlimg2="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +78,16 @@ public class MainActivity extends AppCompatActivity  {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    loadImage(imgpok1,response.getJSONObject("sprites").getString("back_default"));
+                                    String front_pic = response.getJSONObject("sprites").getString("front_default");
+                                    loadImage(imgpok1,front_pic);
                                     namepok1.setText(response.getString("name"));
                                     inf1.add("nombre: "+response.getString("name"));
+                                    namep1 = response.getString("name");
                                     inf1.add("peso: "+response.getString("weight"));
                                     inf1.add("experiencia: "+response.getString("base_experience"));
                                     values[0] = response.getJSONObject("sprites").getString("back_default");
+                                    values[2] = front_pic;
+                                    powerpok1 = response.getString("base_experience");
                                     JSONArray abilities = null;
                                     abilities = response.getJSONArray("abilities");
                                     try {
@@ -122,10 +121,12 @@ public class MainActivity extends AppCompatActivity  {
                                 try {
                                     loadImage(imgpok2,response.getJSONObject("sprites").getString("front_default"));
                                     namepok2.setText(response.getString("name"));
-                                    inf2.add("nombre: "+response.getString("name"));
-                                    inf2.add("peso: "+response.getString("weight"));
-                                    inf2.add("experiencia: "+response.getString("base_experience"));
-                                    values[1]= response.getJSONObject("sprites").getString("back_default");
+                                    inf2.add("nombre: "+ response.getString("name"));
+                                    namep2 = response.getString("name");
+                                    inf2.add("peso: "+ response.getString("weight"));
+                                    inf2.add("experiencia: " + response.getString("base_experience"));
+                                    values[1] = response.getJSONObject("sprites").getString("front_default");
+                                    powerpok2 = response.getString("base_experience");
                                     JSONArray abilities = null;
                                     abilities = response.getJSONArray("abilities");
                                     try {
@@ -155,6 +156,11 @@ public class MainActivity extends AppCompatActivity  {
                 queue.add(getRequest2);
                 versus.setVisibility(View.VISIBLE);
                 randompoks.setVisibility(View.GONE);
+
+                System.out.print("first " + namep1 +"first " + namep2 +"first " + powerpok1 + "first "+ powerpok2 );
+                System.out.print(values[0]);
+                System.out.print(values[1]);
+                System.out.print(values[2]);
             }
 
         });
@@ -164,6 +170,14 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 Intent fight = new Intent(MainActivity.this, Fight.class);
+                fight.putExtra("url", values[0]);
+                fight.putExtra("url2", values[1]);
+                fight.putExtra("pic", values[2]);
+                fight.putExtra("pokemon1", namep1);
+                fight.putExtra("pokemon2", namep2);
+                fight.putExtra("powerpok1", powerpok1);
+                fight.putExtra("powerpok2", powerpok2);
+
                 startActivity(fight);
 
             }
