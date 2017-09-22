@@ -169,16 +169,19 @@ public class MainActivity extends AppCompatActivity  {
         versus.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent fight = new Intent(MainActivity.this, Fight.class);
-                fight.putExtra("url", values[0]);
-                fight.putExtra("url2", values[1]);
-                fight.putExtra("pic", values[2]);
-                fight.putExtra("pokemon1", namep1);
-                fight.putExtra("pokemon2", namep2);
-                fight.putExtra("powerpok1", powerpok1);
-                fight.putExtra("powerpok2", powerpok2);
 
-                startActivity(fight);
+                if (values[0]!= null && values[1]!= null && values[2]!= null && namep1!= null && namep2!= null && powerpok1!= null && powerpok2!= null ){
+                    Intent fight = new Intent(MainActivity.this, Fight.class);
+                    fight.putExtra("url", values[0]);
+                    fight.putExtra("url2", values[1]);
+                    fight.putExtra("pic", values[2]);
+                    fight.putExtra("pokemon1", namep1);
+                    fight.putExtra("pokemon2", namep2);
+                    fight.putExtra("powerpok1", powerpok1);
+                    fight.putExtra("powerpok2", powerpok2);
+                    startActivity(fight);
+                }
+
 
             }
         });
