@@ -11,15 +11,15 @@
         android:roundIcon="@mipmap/esto"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.alvaro.Vistas.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.alvaro.Fight.Fight" />
-        <activity android:name="com.example.alvaro.winner.Winner"></activity>
+        <activity android:name="com.example.alvaro.Vistas.Fight" />
+        <activity android:name="com.example.alvaro.Vistas.Winner"></activity>
     </application>
 
 </manifest>
