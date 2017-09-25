@@ -137,41 +137,6 @@ public class Fight extends AppCompatActivity {
         }
 
 
-        /*
-        final Timer timer = new Timer();
-        timer.scheduleAtFixedRate( new TimerTask()
-        {
-            @Override
-            public void run(){
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    timer.cancel();
-                    }
-                });
-            }
-        }, 0, 5000);
-
-         new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (attacker==0){
-                        progressbar2.setProgress(life2 - decrease);
-                        life2 = life2 - decrease;
-
-                    }
-                    else {
-                        progressbar.setProgress(life - decrease);
-                        life = life - decrease;
-
-                    }
-
-                }
-            }, 7000);
-
-        */
-
 
     }
 
