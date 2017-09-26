@@ -53,8 +53,6 @@ public class Fight extends AppCompatActivity  {
         final String  url2 = intent.getStringExtra("url2");
         final String name_pokemon1 = intent.getStringExtra("pokemon1");
         final String name_pokemon2 = intent.getStringExtra("pokemon2");
-        //final int life_pk1 = Integer.parseInt(intent.getStringExtra("life1"));
-        //final int life_pk2 = Integer.parseInt(intent.getStringExtra("life2"));
 
         /// getting pokemon's power
         final int power1 = Integer.parseInt(intent.getStringExtra("powerpok1"));
@@ -131,42 +129,6 @@ public class Fight extends AppCompatActivity  {
                 }
         };
         thread.start();
-
-         /*
-        // validating winner pokemom becuase of the new activity to be created
-        if (life<=0 || life2<=0){
-
-            if (life>0){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent winner = new Intent(Fight.this, Winner.class);
-                        winner.putExtra("winner", name_pokemon1);
-                        winner.putExtra("url", pic_f_winner);
-                        startActivity(winner);
-                    }
-                }, 3000);
-
-
-            }
-
-            if(life2>0){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent winner = new Intent(Fight.this, Winner.class);
-                        winner.putExtra("winner", name_pokemon2);
-                        winner.putExtra("url", url2);
-                        startActivity(winner);
-                    }
-                }, 3000);
-
-            }
-
-
-        }
-        */
-
 
     }
 

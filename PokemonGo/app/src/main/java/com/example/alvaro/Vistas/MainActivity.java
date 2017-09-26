@@ -84,15 +84,11 @@ public class MainActivity extends AppCompatActivity  {
                                 namepok1.setText(first_pokemon.name());
 
                                 inf1.add("nombre: "+first_pokemon.name());
-
                                 inf1.add("peso: " + first_pokemon.weight());
                                 inf1.add("experiencia: " + first_pokemon.base_experience());
-
                                 inf1.add("habilidades:"+ first_pokemon.abilites());
 
-
                                 listpok1.setAdapter(Adapter);
-
                             }
                         },
                         new Response.ErrorListener() {
@@ -114,8 +110,6 @@ public class MainActivity extends AppCompatActivity  {
                                 inf2.add("habilidades:"+ second_pokemon.abilites());
 
                                 listpok2.setAdapter(Adapter2);
-
-
                             }
                         },
                         new Response.ErrorListener() {
@@ -133,15 +127,10 @@ public class MainActivity extends AppCompatActivity  {
                         versus.setVisibility(View.VISIBLE);
                     }
                 }, 4000);
-
-
-
-        }
-
+             }
         });
 
         versus =(Button) findViewById(R.id.vs);
-
         versus.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -154,22 +143,14 @@ public class MainActivity extends AppCompatActivity  {
                 fight.putExtra("pokemon2", second_pokemon.name());
                 fight.putExtra("powerpok1", first_pokemon.base_experience());
                 fight.putExtra("powerpok2", second_pokemon.base_experience());
-                fight.putExtra("life1", first_pokemon.life());
-                fight.putExtra("life2", second_pokemon.life());
                 startActivity(fight);
-
             }
         });
-
     }
-
-
     private void loadImage(NetworkImageView imageView, String urlImg) {
         imageLoader = HttpRequest.getInstance(this.getApplicationContext())
                 .getImageLoader();
         imageLoader.get(urlImg, ImageLoader.getImageListener(imageView, R.drawable.white, android.R.drawable.ic_dialog_alert));
         imageView.setImageUrl(urlImg, imageLoader);
     }
-
-
 }
