@@ -17,6 +17,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.alvaro.Factory.Factory;
+import com.example.alvaro.Interface.Pokemon;
+import com.example.alvaro.Pokemons.Info_pok;
 import com.example.alvaro.Singleton.HttpRequest;
 import com.example.alvaro.pokemongo.R;
 
@@ -29,19 +32,21 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity  {
 
+    Factory factory = new Factory();
+    Pokemon first_pokemon = factory.getPokemon_object("pokemon");
+    Pokemon second_pokemon = factory.getPokemon_object("pokemon");
+
+
     private ImageLoader imageLoader;
     NetworkImageView imgpok1, imgpok2;
     TextView namepok1,namepok2;
     Button randompoks, versus;
-    ArrayList<String> inf1;
-    ArrayList<String> inf2;
     ListView listpok1;
     ListView listpok2;
-    Boolean rd1=false,rd2=false;
-    int pokemon1, pokemon2;
-    String  powerpok1, powerpok2, id, namep1, namep2;
+    ArrayList<String> inf1;
+    ArrayList<String> inf2;
+
     public String[] values = new String[3];
-    Random rand = new Random();
     public final String url = "https://pokeapi.co/api/v2/pokemon/";
 
     @Override
@@ -57,11 +62,8 @@ public class MainActivity extends AppCompatActivity  {
         listpok2= (ListView) findViewById(R.id.listView2);
         inf1=new ArrayList<String>();
         inf2=new ArrayList<String>();
-        final ArrayAdapter<String> Adapter= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, 0 ,inf1);
+        final ArrayAdapter<String> Adapter= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, 0 , inf1);
         final ArrayAdapter<String> Adapter2= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,0,  inf2);
-
-        pokemon1 = rand.nextInt(721) + 1;
-        pokemon2 = rand.nextInt(721) + 1;
 
         versus = (Button) findViewById(R.id.vs);
         versus.setVisibility(View.INVISIBLE);
@@ -70,42 +72,28 @@ public class MainActivity extends AppCompatActivity  {
         {
             @Override
             public void onClick(View view) {
-                while (pokemon1 == pokemon2)
-                    pokemon2 = rand.nextInt(721) + 1;
-                JsonObjectRequest getRequest1 = new JsonObjectRequest(Request.Method.GET, url + String.valueOf(pokemon1)+"/",null,
+                System.out.println("id"+first_pokemon.id());
+                while (first_pokemon.id() == second_pokemon.id())
+                    second_pokemon.id();
+                JsonObjectRequest getRequest1 = new JsonObjectRequest(Request.Method.GET, url + String.valueOf(first_pokemon.id())+"/",null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    String front_pic = response.getJSONObject("sprites").getString("front_default");
-                                    loadImage(imgpok1,front_pic);
-                                    namepok1.setText(response.getString("name"));
-                                    inf1.add("nombre: "+response.getString("name"));
-                                    namep1 = response.getString("name");
-                                    inf1.add("peso: "+response.getString("weight"));
-                                    inf1.add("experiencia: "+response.getString("base_experience"));
-                                    values[0] = response.getJSONObject("sprites").getString("back_default");
-                                    values[2] = front_pic;
-                                    powerpok1 = response.getString("base_experience");
-                                    JSONArray abilities = null;
-                                    abilities = response.getJSONArray("abilities");
-                                    try {
-                                        for (int i = 0; i < abilities.length(); i++) {
-                                            JSONObject c = abilities.getJSONObject(i);
-                                            // Ability node is JSON Object
-                                            JSONObject ability = c.getJSONObject("ability");
-                                            inf1.add("habilidad:"+ability.getString("name"));
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                first_pokemon.setResponse(response);
+                                System.out.println("imagen"+first_pokemon.front_image());
+                                loadImage(imgpok1,first_pokemon.front_image());
+                                namepok1.setText(first_pokemon.name());
 
-                                    listpok1.setAdapter(Adapter);
-                                    ///vd1.setText("Vida: "+String.valueOf(vida1));
-                                    ///rd1=true;
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                inf1.add("nombre: "+first_pokemon.name());
+
+                                inf1.add("peso: " + first_pokemon.weight());
+                                inf1.add("experiencia: " + first_pokemon.base_experience());
+
+                                inf1.add("habilidades:"+ first_pokemon.abilites());
+
+
+                                listpok1.setAdapter(Adapter);
+
                             }
                         },
                         new Response.ErrorListener() {
@@ -113,37 +101,22 @@ public class MainActivity extends AppCompatActivity  {
                             public void onErrorResponse(VolleyError error) {
                             }
                         });
-                JsonObjectRequest getRequest2 = new JsonObjectRequest(Request.Method.GET, url + String.valueOf(pokemon2)+"/", null,
+                JsonObjectRequest getRequest2 = new JsonObjectRequest(Request.Method.GET, url + String.valueOf(second_pokemon.id())+"/", null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    loadImage(imgpok2,response.getJSONObject("sprites").getString("front_default"));
-                                    namepok2.setText(response.getString("name"));
-                                    inf2.add("nombre: "+ response.getString("name"));
-                                    namep2 = response.getString("name");
-                                    inf2.add("peso: "+ response.getString("weight"));
-                                    inf2.add("experiencia: " + response.getString("base_experience"));
-                                    values[1] = response.getJSONObject("sprites").getString("front_default");
-                                    powerpok2 = response.getString("base_experience");
-                                    JSONArray abilities = null;
-                                    abilities = response.getJSONArray("abilities");
-                                    try {
-                                        for (int i = 0; i < abilities.length(); i++) {
-                                            JSONObject c = abilities.getJSONObject(i);
-                                            // Ability node is JSON Object
-                                            JSONObject ability = c.getJSONObject("ability");
-                                            inf2.add("habilidad:"+ability.getString("name"));
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    listpok2.setAdapter(Adapter2);
-                                    /// vd2.setText("Vida: "+String.valueOf(vida2));
-                                    /// rd2=true;
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                second_pokemon.setResponse(response);
+                                loadImage(imgpok2, second_pokemon.front_image());
+                                namepok2.setText(second_pokemon.name());
+
+                                inf2.add("nombre: "+ second_pokemon.name());
+                                inf2.add("peso: "+ second_pokemon.weight());
+                                inf2.add("experiencia: " + second_pokemon.base_experience());
+                                inf2.add("habilidades:"+ second_pokemon.abilites());
+
+                                listpok2.setAdapter(Adapter2);
+
+
                             }
                         },
                         new Response.ErrorListener() {
@@ -156,10 +129,6 @@ public class MainActivity extends AppCompatActivity  {
                 versus.setVisibility(View.VISIBLE);
                 randompoks.setVisibility(View.GONE);
 
-                System.out.print("first " + namep1 +"first " + namep2 +"first " + powerpok1 + "first "+ powerpok2 );
-                System.out.print(values[0]);
-                System.out.print(values[1]);
-                System.out.print(values[2]);
             }
 
         });
@@ -169,20 +138,19 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                if (values[0]!= null && values[1]!= null && values[2]!= null && namep1!= null && namep2!= null && powerpok1!= null && powerpok2!= null ){
-                    Intent fight = new Intent(MainActivity.this, Fight.class);
-                    fight.putExtra("url", values[0]);
-                    fight.putExtra("url2", values[1]);
-                    fight.putExtra("pic", values[2]);
-                    fight.putExtra("pokemon1", namep1);
-                    fight.putExtra("pokemon2", namep2);
-                    fight.putExtra("powerpok1", powerpok1);
-                    fight.putExtra("powerpok2", powerpok2);
-                    startActivity(fight);
+                Intent fight = new Intent(MainActivity.this, Fight.class);
+                fight.putExtra("url", first_pokemon.back_image());
+                fight.putExtra("url2", second_pokemon.front_image());
+                fight.putExtra("pic", first_pokemon.front_image());
+                fight.putExtra("pokemon1", first_pokemon.name());
+                fight.putExtra("pokemon2", second_pokemon.name());
+                fight.putExtra("powerpok1", first_pokemon.base_experience());
+                fight.putExtra("powerpok2", second_pokemon.base_experience());
+                startActivity(fight);
                 }
 
 
-            }
+
         });
 
     }

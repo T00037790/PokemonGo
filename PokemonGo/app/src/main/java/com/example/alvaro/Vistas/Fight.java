@@ -16,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.alvaro.Singleton.HttpRequest;
 import com.example.alvaro.pokemongo.R;
 
-
 import java.util.ArrayList;
 import java.util.Random;
 
