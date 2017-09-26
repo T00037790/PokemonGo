@@ -1,6 +1,7 @@
 package com.example.alvaro.Vistas;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity  {
         {
             @Override
             public void onClick(View view) {
-                System.out.println("id"+first_pokemon.id());
                 while (first_pokemon.id() == second_pokemon.id())
                     second_pokemon.id();
                 JsonObjectRequest getRequest1 = new JsonObjectRequest(Request.Method.GET, url + String.valueOf(first_pokemon.id())+"/",null,
@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity  {
                             @Override
                             public void onResponse(JSONObject response) {
                                 first_pokemon.setResponse(response);
-                                System.out.println("imagen"+first_pokemon.front_image());
                                 loadImage(imgpok1,first_pokemon.front_image());
                                 namepok1.setText(first_pokemon.name());
 
@@ -126,14 +125,23 @@ public class MainActivity extends AppCompatActivity  {
                         });
                 queue.add(getRequest1);
                 queue.add(getRequest2);
-                versus.setVisibility(View.VISIBLE);
                 randompoks.setVisibility(View.GONE);
 
-            }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        versus.setVisibility(View.VISIBLE);
+                    }
+                }, 4000);
+
+
+
+        }
 
         });
 
         versus =(Button) findViewById(R.id.vs);
+
         versus.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -146,11 +154,11 @@ public class MainActivity extends AppCompatActivity  {
                 fight.putExtra("pokemon2", second_pokemon.name());
                 fight.putExtra("powerpok1", first_pokemon.base_experience());
                 fight.putExtra("powerpok2", second_pokemon.base_experience());
+                fight.putExtra("life1", first_pokemon.life());
+                fight.putExtra("life2", second_pokemon.life());
                 startActivity(fight);
-                }
 
-
-
+            }
         });
 
     }

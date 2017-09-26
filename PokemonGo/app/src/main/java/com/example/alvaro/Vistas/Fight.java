@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class Fight extends AppCompatActivity {
+public class Fight extends AppCompatActivity  {
 
 
     private ImageLoader imageLoader;
@@ -32,6 +32,7 @@ public class Fight extends AppCompatActivity {
     ListView fighting;
     ArrayList<String> hits;
     int decrease;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,13 @@ public class Fight extends AppCompatActivity {
         final ArrayAdapter<String> Adapter_fight= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 , hits);
 
         Intent intent = getIntent();
-
         final String url = intent.getStringExtra("url");
         final String pic_f_winner = intent.getStringExtra("pic");
         final String  url2 = intent.getStringExtra("url2");
         final String name_pokemon1 = intent.getStringExtra("pokemon1");
         final String name_pokemon2 = intent.getStringExtra("pokemon2");
+        //final int life_pk1 = Integer.parseInt(intent.getStringExtra("life1"));
+        //final int life_pk2 = Integer.parseInt(intent.getStringExtra("life2"));
 
         /// getting pokemon's power
         final int power1 = Integer.parseInt(intent.getStringExtra("powerpok1"));
@@ -72,32 +74,65 @@ public class Fight extends AppCompatActivity {
 
         progressbar = (ProgressBar) findViewById(R.id.progressBar);
         progressbar2 = (ProgressBar) findViewById(R.id.progressBar2);
-        Random who = new Random();
-        while(life>=0 && life2>=0 ) {
+        final Random who = new Random();
 
-            attacker = who.nextInt(2);
-            decrease = fighting(life, life2, attacker, power1, power2);
-            if (decrease > 0) {
-                if (attacker == 0) {
-                    hits.add(name_pokemon1 + " is attacking");
-                    progressbar2.setProgress(life2 - decrease);
-                    life2 = life2 - decrease;
 
-                } else {
-                    progressbar.setProgress(life - decrease);
-                    life = life - decrease;
-                    hits.add(name_pokemon2 + " is attacking");
+        Thread thread = new Thread()
+        {
+            public void run(){
+                while(life>=0 && life2>=0 ) {
+                    try {
+                        this.sleep(2000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                attacker = who.nextInt(2);
+                                decrease = fighting(life, life2, attacker, power1, power2);
+                                if (decrease > 0) {
+                                    if (attacker == 0) {
+                                        hits.add(name_pokemon1 + " is attacking");
+                                        progressbar2.setProgress(life2 - decrease);
+                                        life2 = life2 - decrease;
+
+                                    } else {
+                                        progressbar.setProgress(life - decrease);
+                                        life = life - decrease;
+                                        hits.add(name_pokemon2 + " is attacking");
+                                    }
+                                }
+                                fighting.setAdapter(Adapter_fight);
+                                decrease = 0;
+                            }
+                        });
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(life<=0 || life2<=0){
+                        this.interrupt();
+                        if (life>0){
+                            Intent winner = new Intent(Fight.this, Winner.class);
+                            winner.putExtra("winner", name_pokemon1);
+                            winner.putExtra("url", pic_f_winner);
+                            startActivity(winner);
+
+                        }
+
+                        if(life2>0){
+                            Intent winner = new Intent(Fight.this, Winner.class);
+                            winner.putExtra("winner", name_pokemon2);
+                            winner.putExtra("url", url2);
+                            startActivity(winner);
+                                }
+
+
+                        }
+                    }
                 }
-            }
-            fighting.setAdapter(Adapter_fight);
-            decrease = 0;
-        }
+        };
+        thread.start();
 
-
-
-
-
-
+         /*
         // validating winner pokemom becuase of the new activity to be created
         if (life<=0 || life2<=0){
 
@@ -130,10 +165,11 @@ public class Fight extends AppCompatActivity {
 
 
         }
-
+        */
 
 
     }
+
 
     public int fighting (int vida1, int vida2, int who, int power1, int power2){
         if (who==0){
