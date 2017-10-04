@@ -9,7 +9,15 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        testApplicationId "com.example.alvaro.pokemongo.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        testOptions {
+            reportDir = "$project.buildDir/results/report"
+            resultsDir = "$project.buildDir/results"
+            unitTests.returnDefaultValues = true
+        }
     }
     buildTypes {
         release {
@@ -28,5 +36,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.volley:volley:1.0.0'
+
+    // Required for local unit tests (JUnit 4 framework)
     testCompile 'junit:junit:4.12'
+    compile "com.android.support.test:runner:0.5"
+
 }
