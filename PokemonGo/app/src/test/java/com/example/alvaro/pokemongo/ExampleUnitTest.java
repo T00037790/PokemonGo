@@ -15,9 +15,4 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    public void test_does_it_works(){
-
-        assertTrue(20>5);
-
-    }
 }

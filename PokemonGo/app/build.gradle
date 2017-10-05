@@ -40,5 +40,8 @@ dependencies {
     // Required for local unit tests (JUnit 4 framework)
     testCompile 'junit:junit:4.12'
     compile "com.android.support.test:runner:0.5"
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.3'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
 
 }
